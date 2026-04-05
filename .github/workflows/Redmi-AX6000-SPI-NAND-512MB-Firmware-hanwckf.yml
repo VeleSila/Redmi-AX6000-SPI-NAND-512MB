@@ -44,7 +44,7 @@ jobs:
     
     steps:
     - name: 检查项目分支
-      uses: actions/checkout@v4
+      uses: actions/checkout@main
       
     - name: 初始化编译环境
       env:
@@ -60,7 +60,7 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
         
     - name: 清理磁盘空间(Ubuntu)
-      uses: jlumbroso/free-disk-space@v1.3.1
+      uses: jlumbroso/free-disk-space@main
       with:
         # this might remove tools that are actually needed,
         # when set to "true" but frees about 6 GB
@@ -147,7 +147,7 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
       
     - name: 上传固件到Actions Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: ${{ env.FILE_DATE }}-${{ env.OPENWRT_NAME }}-${{ env.DEVICE_NAME }}
@@ -164,7 +164,7 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         
     - name: 发布固件至Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.1.0
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
